@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พจนานุกรมฉบับวิทยาอาลักษณ์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        /* Light theme variables (default) */
+        :root {
+            --bg-primary: #f9fafb; /* gray-50 */
+            --bg-secondary: #f3f4f6; /* gray-100 */
+            --bg-accent: #e5e7eb; /* gray-200 */
+            --text-primary: #1f2937; /* gray-800 */
+            --text-secondary: #4b5563; /* gray-600 */
+            --border-color: #d1d5db; /* gray-300 */
+            --input-bg: #ffffff;
+            --input-text: #1f2937;
+            --btn-primary-bg: #a78bfa; /* violet-400 */
+            --btn-primary-hover: #8b5cf6; /* violet-500 */
+            --btn-secondary-bg: #9ca3af; /* gray-400 */
+            --btn-secondary-hover: #6b7280; /* gray-500 */
+            --btn-neutral-bg: #6b7280; /* gray-500 */
+            --btn-neutral-hover-bg: #4b5563; /* gray-600 */
+            --btn-success-bg: #22c55e; /* green-500 */
+            --btn-success-hover-bg: #16a34a; /* green-600 */
+            --btn-warning-bg: #eab308; /* yellow-500 */
+            --btn-warning-hover-bg: #ca8a04; /* yellow-600 */
+        }
+        /* Dark theme variables */
+        .dark {
+            --bg-primary: #1f2937; /* gray-800 */
+            --bg-secondary: #374151; /* gray-700 */
+            --bg-accent: #4b5563; /* gray-600 */
+            --text-primary: #f3f4f6; /* gray-100 */
+            --text-secondary: #d1d5db; /* gray-300 */
+            --border-color: #4b5563; /* gray-600 */
+            --input-bg: #4b5563; /* gray-600 */
+            --input-text: #f3f4f6; /* gray-100 */
+            --btn-primary-bg: #8b5cf6; /* violet-500 */
+            --btn-primary-hover: #7c3aed; /* violet-600 */
+            --btn-secondary-bg: #6b7280; /* gray-500 */
+            --btn-secondary-hover: #4b5563; /* gray-600 */
+            --btn-neutral-bg: #4b5563; /* gray-600 */
+            --btn-neutral-hover-bg: #374151; /* gray-700 */
+            --btn-success-bg: #16a34a; /* green-600 */
+            --btn-success-hover-bg: #15803d; /* green-700 */
+            --btn-warning-bg: #ca8a04; /* yellow-600 */
+            --btn-warning-hover-bg: #a16207; /* yellow-700 */
+        }
+
+        /* Utility classes using CSS variables */
+        .bg-primary { background-color: var(--bg-primary); }
+        .bg-secondary { background-color: var(--bg-secondary); }
+        .bg-accent { background-color: var(--bg-accent); }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .border-color { border-color: var(--border-color); }
+        .input-bg { background-color: var(--input-bg); }
+        .input-text { color: var(--input-text); }
+        
+        .btn-primary { background-color: var(--btn-primary-bg); color: white; }
+        .btn-primary:hover { background-color: var(--btn-primary-hover); }
+        .btn-secondary { background-color: var(--btn-secondary-bg); color: white; }
+        .btn-secondary:hover { background-color: var(--btn-secondary-hover); }
+        .btn-neutral { background-color: var(--btn-neutral-bg); color: white; }
+        .btn-neutral:hover { background-color: var(--btn-neutral-hover-bg); }
+        .btn-success { background-color: var(--btn-success-bg); color: white; }
+        .btn-success:hover { background-color: var(--btn-success-hover-bg); }
+        .btn-warning { background-color: var(--btn-warning-bg); color: white; }
+        .btn-warning:hover { background-color: var(--btn-warning-hover-bg); }
+        
+        .btn-search-active {
+            background-color: var(--btn-primary-bg) !important; /* Use primary button color for active search type */
+            color: white !important;
+            box-shadow: 0 0 0 2px var(--btn-primary-hover);
+        }
+
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-accent);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--btn-primary-bg);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--btn-primary-hover);
+        }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 100; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.5); 
+        }
+        .modal-content {
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh; 
+            overflow-y: auto; 
+        }
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .autocomplete-items div:hover {
+            background-color: var(--bg-accent);
+        }
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            margin: 0.125rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+        .tag-purple {
+            background-color: #c084fc; 
+            color: white;
+        }
+        .dark .tag-purple {
+            background-color: #a855f7; 
+        }
+        .tag-blue {
+            background-color: #7dd3fc; 
+            color: #0c4a6e; 
+        }
+        .dark .tag-blue {
+            background-color: #38bdf8; 
+            color: white;
+        }
+        .tag-green {
+            background-color: #6ee7b7; 
+            color: #065f46; 
+        }
+        .dark .tag-green {
+            background-color: #34d399; 
+            color: white;
+        }
+        .loading-spinner {
+            border: 4px solid var(--bg-accent);
+            border-top: 4px solid var(--btn-primary-bg);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-primary text-primary transition-colors duration-300">
+
+    <button id="themeToggleBtn" class="fixed top-4 right-4 p-2 rounded-full shadow-md btn-primary z-50">
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <header class="py-8 text-center">
+        <h1 class="text-4xl font-bold text-purple-600 dark:text-purple-400">พจนานุกรมฉบับวิทยาอาลักษณ์</h1>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section id="loginSection" class="max-w-md mx-auto bg-secondary p-8 rounded-lg shadow-xl">
+            <h2 class="text-2xl font-semibold mb-6 text-center text-primary">เข้าสู่ระบบ (สำหรับผู้ดูแล)</h2>
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-secondary mb-1">ชื่อผู้ใช้:</label>
+                <input type="text" id="username" value="Admin" class="w-full p-3 border border-color rounded-lg input-bg input-text focus:ring-2 focus:ring-purple-500 outline-none" placeholder="Admin">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-secondary mb-1">รหัสผ่าน:</label>
+                <input type="password" id="password" value="Arm102548" class="w-full p-3 border border-color rounded-lg input-bg input-text focus:ring-2 focus:ring-purple-500 outline-none" placeholder="Arm102548">
+            </div>
+            <button id="loginBtn" class="w-full btn-primary font-semibold py-3 rounded-lg shadow-md hover:opacity-90 transition-opacity">เข้าสู่ระบบ</button>
+            <p id="loginError" class="text-red-500 text-sm mt-4 text-center"></p>
+            <button id="switchToUserViewBtn" class="w-full mt-4 btn-neutral font-semibold py-3 rounded-lg shadow-md transition-opacity">เข้าสู่หน้าผู้ใช้งานทั่วไป</button>
+        </section>
+
+        <section id="adminSection" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-semibold text-primary">ส่วนผู้ดูแลระบบ</h2>
+                <button id="logoutBtn" class="btn-primary px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition-opacity">ออกจากระบบ</button>
+            </div>
+            <button id="showAddWordFormBtn" class="btn-primary px-6 py-3 rounded-lg shadow-md mb-6"><i class="fas fa-plus mr-2"></i>เพิ่มคำศัพท์ใหม่</button>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-2 text-primary">จัดการประเภทของคำ</h3>
+                <div id="posManagement" class="bg-secondary p-4 rounded-lg shadow">
+                    <div id="posList" class="mb-2"></div>
+                    <input type="text" id="newPosInput" class="p-2 border border-color rounded-lg input-bg input-text mr-2" placeholder="เพิ่มประเภทคำใหม่">
+                    <button id="addPosBtn" class="btn-success text-white px-4 py-2 rounded-lg">เพิ่ม</button>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-2 text-primary">จัดการหมวดศัพท์</h3>
+                <div id="categoryManagement" class="bg-secondary p-4 rounded-lg shadow">
+                    <div id="categoryList" class="mb-2"></div>
+                    <input type="text" id="newCategoryInput" class="p-2 border border-color rounded-lg input-bg input-text mr-2" placeholder="เพิ่มหมวดศัพท์ใหม่">
+                    <button id="addCategoryBtn" class="btn-success text-white px-4 py-2 rounded-lg">เพิ่ม</button>
+                </div>
+            </div>
+
+            <div class="mb-4 relative">
+                <input type="text" id="adminSearchInput" class="w-full p-3 border border-color rounded-lg input-bg input-text pl-10" placeholder="ค้นหาคำศัพท์เพื่อแก้ไข...">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <div id="adminWordList" class="space-y-4">
+            </div>
+        </section>
+
+        <section id="userSection" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                 <h2 class="text-3xl font-semibold text-primary">ค้นหาคำศัพท์</h2>
+                 <button id="switchToLoginViewBtn" class="btn-primary px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition-opacity">ไปหน้าผู้ดูแล</button>
+            </div>
+
+            <div class="mb-6">
+                <div class="relative">
+                    <input type="text" id="userSearchInput" class="w-full p-4 border border-color rounded-lg input-bg input-text pl-10 text-lg" placeholder="พิมพ์คำศัพท์ที่ต้องการค้นหา...">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <div id="autocompleteList" class="autocomplete-items bg-secondary rounded-b-lg shadow-lg"></div>
+                </div>
+                <div id="searchTypeButtons" class="mt-4 flex flex-wrap gap-2 justify-center">
+                    <button data-searchtype="word" class="search-type-btn btn-secondary px-5 py-2 rounded-lg text-sm btn-search-active">ค้นหาตามคำศัพท์</button>
+                    <button data-searchtype="rhyme" class="search-type-btn btn-secondary px-5 py-2 rounded-lg text-sm">ค้นหาคำสัมผัส</button>
+                    <button data-searchtype="synonym" class="search-type-btn btn-secondary px-5 py-2 rounded-lg text-sm">ค้นหาคำไวพจน์</button>
+                </div>
+            </div>
+            
+            <div id="wordOfTheDay" class="my-8 p-6 bg-secondary rounded-lg shadow-lg text-center">
+                <h3 class="text-2xl font-semibold mb-3 text-purple-500 dark:text-purple-400">คำศัพท์ประจำวัน</h3>
+                <div id="wordOfTheDayContent" class="text-lg">
+                </div>
+            </div>
+
+            <div class="my-6 p-4 border-2 border-purple-500 dark:border-purple-400 rounded-lg text-center bg-purple-100 dark:bg-purple-900">
+                <p id="totalWordCount" class="text-lg text-purple-700 dark:text-purple-300 font-semibold"></p>
+            </div>
+
+            <div id="userWordList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+             <div id="loadingIndicator" class="hidden text-center py-8">
+                <div class="loading-spinner"></div>
+                <p class="text-secondary text-lg">กำลังโหลดข้อมูล...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 mt-12 bg-secondary text-center text-sm text-secondary">
+        <p>Developer: วิทยา หมายมั่น | ครูอาร์เธอร์</p>
+        <p>ฐานข้อมูลคำศัพท์และคำแปลส่วนหนึ่งถูกพัฒนามาจากพจนานุกรมเล็กซิตรอน (LEXiTRON)<br>
+        ซึ่งพัฒนาโดยศูนย์เทคโนโลยีอิเล็กทรอนิกส์และคอมพิวเตอร์แห่งชาติ (NECTEC) - <a href="http://www.nectec.or.th" target="_blank" class="text-purple-500 hover:underline">http://www.nectec.or.th</a></p>
+        <p>ติดต่อ: <a href="https://kruarthurclassroom.blogspot.com/" target="_blank" class="text-purple-500 hover:underline">https://kruarthurclassroom.blogspot.com/</a></p>
+        <p>© 2025-2026 All Rights Reserved</p>
+    </footer>
+
+    <div id="wordDetailModal" class="modal">
+        <div class="modal-content bg-secondary shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalWordTitle" class="text-3xl font-bold text-purple-500 dark:text-purple-400"></h3>
+                <button id="closeModalBtn" class="text-2xl text-primary hover:text-red-500">&times;</button>
+            </div>
+            <div id="modalWordContent" class="space-y-3 text-primary">
+            </div>
+        </div>
+    </div>
+
+    <div id="addEditWordModal" class="modal">
+        <div class="modal-content bg-secondary shadow-xl">
+            <h3 id="formTitle" class="text-2xl font-semibold mb-6 text-primary"></h3>
+            <form id="wordForm">
+                <input type="hidden" id="wordId">
+                <div class="mb-4">
+                    <label for="formWord" class="block text-sm font-medium text-secondary mb-1">คำศัพท์:</label>
+                    <input type="text" id="formWord" required class="w-full p-3 border border-color rounded-lg input-bg input-text">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-secondary mb-1">ประเภทของคำ:</label>
+                    <div id="formPosContainer" class="p-3 border border-color rounded-lg input-bg input-text max-h-32 overflow-y-auto">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="formMeaning" class="block text-sm font-medium text-secondary mb-1">ความหมาย:</label>
+                    <textarea id="formMeaning" rows="4" required class="w-full p-3 border border-color rounded-lg input-bg input-text"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="formSynonym" class="block text-sm font-medium text-secondary mb-1">Synonym (คำไวพจน์, คั่นด้วยจุลภาค):</label>
+                    <input type="text" id="formSynonym" class="w-full p-3 border border-color rounded-lg input-bg input-text">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-secondary mb-1">หมวดศัพท์:</label>
+                    <div id="formCategoryContainer" class="p-3 border border-color rounded-lg input-bg input-text max-h-32 overflow-y-auto">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="formEtymology" class="block text-sm font-medium text-secondary mb-1">ศัพทมูลวิทยา:</label>
+                    <input type="text" id="formEtymology" class="w-full p-3 border border-color rounded-lg input-bg input-text">
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancelFormBtn" class="btn-neutral px-6 py-2 rounded-lg">ยกเลิก</button>
+                    <button type="submit" class="btn-primary px-6 py-2 rounded-lg">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // --- Constants and State ---
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyQt6pWFF_y0LZBA38C8VheADB-bud0PshyYiUehFTWZxWUqzB5d0n_EzmMA7MDwAYnwQ/exec';
+        let allWords = [];
+        let isAdmin = false;
+        let currentEditWordId = null; 
+        let currentSearchType = 'word'; // Default search type
+
+        let partsOfSpeech = ['คำนาม', 'คำสรรพนาม', 'คำกริยา', 'คำวิเศษณ์', 'คำบุพบท', 'คำสันธาน', 'คำอุทาน'];
+        let categories = ['ทั่วไป', 'หลักภาษาไทย', 'พฤกษศาสตร์', 'สัตว์']; 
+
+        // --- DOM Elements ---
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const loginSection = document.getElementById('loginSection');
+        const adminSection = document.getElementById('adminSection');
+        const userSection = document.getElementById('userSection');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const switchToUserViewBtn = document.getElementById('switchToUserViewBtn');
+        const switchToLoginViewBtn = document.getElementById('switchToLoginViewBtn');
+        
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('loginError');
+
+        const showAddWordFormBtn = document.getElementById('showAddWordFormBtn');
+        const addEditWordModal = document.getElementById('addEditWordModal');
+        const wordForm = document.getElementById('wordForm');
+        const formTitle = document.getElementById('formTitle');
+        const cancelFormBtn = document.getElementById('cancelFormBtn');
+        const wordIdInput = document.getElementById('wordId'); 
+        const formWordInput = document.getElementById('formWord');
+        const formPosContainer = document.getElementById('formPosContainer');
+        const formMeaningInput = document.getElementById('formMeaning');
+        const formSynonymInput = document.getElementById('formSynonym');
+        const formCategoryContainer = document.getElementById('formCategoryContainer');
+        const formEtymologyInput = document.getElementById('formEtymology');
+
+        const adminSearchInput = document.getElementById('adminSearchInput');
+        const adminWordList = document.getElementById('adminWordList');
+
+        const userSearchInput = document.getElementById('userSearchInput');
+        const searchTypeButtonsContainer = document.getElementById('searchTypeButtons');
+        const autocompleteList = document.getElementById('autocompleteList');
+        const userWordList = document.getElementById('userWordList');
+        const totalWordCount = document.getElementById('totalWordCount');
+        const wordOfTheDayDiv = document.getElementById('wordOfTheDayContent');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+
+        const wordDetailModal = document.getElementById('wordDetailModal');
+        const modalWordTitle = document.getElementById('modalWordTitle');
+        const modalWordContent = document.getElementById('modalWordContent');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        const posManagementDiv = document.getElementById('posManagement');
+        const posListDiv = document.getElementById('posList');
+        const newPosInput = document.getElementById('newPosInput');
+        const addPosBtn = document.getElementById('addPosBtn');
+
+        const categoryManagementDiv = document.getElementById('categoryManagement');
+        const categoryListDiv = document.getElementById('categoryList');
+        const newCategoryInput = document.getElementById('newCategoryInput');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+
+        // --- Theme Management ---
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+        
+        applyTheme(localStorage.getItem('theme') || 'light'); // Apply theme on initial load
+
+
+        // --- API Communication ---
+        async function fetchData(action, params = {}) {
+            showLoading();
+            let url = `${API_URL}?action=${action}`;
+            if (Object.keys(params).length > 0) {
+                url += '&' + new URLSearchParams(params).toString();
+            }
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                hideLoading();
+                return data;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert(`เกิดข้อผิดพลาดในการดึงข้อมูล: ${error.message}`);
+                hideLoading();
+                return null;
+            }
+        }
+
+        async function postData(payload) {
+            showLoading();
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(payload)
+                });
+                const textResponse = await response.text();
+                hideLoading();
+                try {
+                    const jsonResponse = JSON.parse(textResponse);
+                    if (jsonResponse.success !== undefined && !jsonResponse.success) {
+                         throw new Error(jsonResponse.message || jsonResponse.error || 'Unknown API error after POST');
+                    }
+                    return jsonResponse; 
+                } catch (parseError) {
+                    if (response.ok) return { success: true, message: textResponse }; 
+                    throw new Error(textResponse || `API returned non-JSON error: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error('Post error:', error);
+                alert(`เกิดข้อผิดพลาดในการบันทึกข้อมูล: ${error.message}`);
+                hideLoading();
+                return null;
+            }
+        }
+        
+        function showLoading() {
+            if(loadingIndicator) loadingIndicator.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            if(loadingIndicator) loadingIndicator.classList.add('hidden');
+        }
+
+        // --- Word Data Processing ---
+        function processWords(data) {
+            if (data && data.success && Array.isArray(data.data)) {
+                allWords = data.data.map(word => ({
+                    ...word,
+                    'คำศัพท์': word['คำศัพท์'] || '',
+                    'ประเภทของคำ': word['ประเภทของคำ'] || '',
+                    'ความหมาย': word['ความหมาย'] || '',
+                    'Synonym': word['Synonym'] || '',
+                    'หมวดศัพท์': word['หมวดศัพท์'] || '',
+                    'ศัพทมูลวิทยา': word['ศัพทมูลวิทยา'] || ''
+                }));
+                updateWordDisplays(); 
+                updateTotalWordCount();
+                displayWordOfTheDay();
+            } else {
+                console.error('Invalid data format received:', data);
+                allWords = [];
+                updateWordDisplays(); 
+                updateTotalWordCount();
+            }
+        }
+        
+        async function loadInitialData() {
+            const data = await fetchData('findAllRegister');
+            processWords(data);
+            loadCustomLists(); 
+            renderPosManagementList();
+            renderCategoryManagementList();
+        }
+
+        // --- UI Updates ---
+        function updateView() {
+            if (isAdmin) {
+                loginSection.classList.add('hidden');
+                adminSection.classList.remove('hidden');
+                userSection.classList.add('hidden');
+                renderAdminWordList(allWords); 
+            } else {
+                loginSection.classList.add('hidden'); 
+                adminSection.classList.add('hidden');
+                userSection.classList.remove('hidden');
+                const currentSearchTerm = userSearchInput.value.trim();
+                if (currentSearchTerm) {
+                     handleUserSearch(); 
+                } else {
+                    renderUserWordList([]); 
+                }
+                setActiveSearchButton(currentSearchType);
+            }
+        }
+        
+        function switchToUserView() {
+            isAdmin = false;
+            sessionStorage.removeItem('isAdmin');
+            userSearchInput.value = ''; 
+            autocompleteList.innerHTML = ''; 
+            autocompleteList.style.display = 'none'; 
+            currentSearchType = 'word'; 
+            updateView(); 
+        }
+
+        function switchToAdminView() { 
+            isAdmin = true;
+            sessionStorage.setItem('isAdmin', 'true');
+            updateView();
+        }
+        
+        function switchToLoginScreen() {
+            isAdmin = false;
+            sessionStorage.removeItem('isAdmin');
+            loginSection.classList.remove('hidden');
+            adminSection.classList.add('hidden');
+            userSection.classList.add('hidden');
+            loginError.textContent = '';
+        }
+
+        // --- Login/Logout ---
+        loginBtn.addEventListener('click', () => {
+            const user = usernameInput.value;
+            const pass = passwordInput.value;
+            if (user === 'Admin' && pass === 'Arm102548') {
+                switchToAdminView();
+            } else {
+                loginError.textContent = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            switchToLoginScreen();
+        });
+
+        switchToUserViewBtn.addEventListener('click', switchToUserView);
+        switchToLoginViewBtn.addEventListener('click', switchToLoginScreen);
+
+
+        // --- Word Display Functions ---
+        function createTag(text, colorClass = 'tag-purple') {
+            const tag = document.createElement('span');
+            tag.className = `tag ${colorClass} mr-1 mb-1`;
+            tag.textContent = text;
+            return tag;
+        }
+
+        function renderUserWordList(wordsToDisplay) {
+            userWordList.innerHTML = '';
+            if (!wordsToDisplay || wordsToDisplay.length === 0) {
+                if (userSearchInput.value.trim() !== '') {
+                    userWordList.innerHTML = '<p class="text-secondary col-span-full text-center">ไม่พบคำศัพท์ที่ตรงกับคำค้นหา</p>';
+                } else {
+                     userWordList.innerHTML = '<p class="text-secondary col-span-full text-center">กรุณาพิมพ์คำศัพท์และเลือกประเภทการค้นหา</p>'; 
+                }
+                return;
+            }
+            wordsToDisplay.forEach(word => {
+                const card = document.createElement('div');
+                card.className = 'bg-secondary p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer';
+                card.innerHTML = `
+                    <h3 class="text-xl font-semibold text-purple-500 dark:text-purple-400 mb-2">${word['คำศัพท์']}</h3>
+                    <p class="text-secondary text-sm truncate mb-1"><strong>ประเภท:</strong> ${word['ประเภทของคำ'] || 'N/A'}</p>
+                    <p class="text-secondary text-sm truncate"><strong>ความหมาย:</strong> ${word['ความหมาย'] ? word['ความหมาย'].substring(0, 100) + '...' : 'N/A'}</p>
+                `;
+                card.addEventListener('click', () => showWordDetailModal(word));
+                userWordList.appendChild(card);
+            });
+        }
+
+        function renderAdminWordList(wordsToDisplay) {
+            adminWordList.innerHTML = '';
+             if (!wordsToDisplay || wordsToDisplay.length === 0) {
+                adminWordList.innerHTML = '<p class="text-secondary text-center">ไม่พบคำศัพท์</p>';
+                return;
+            }
+            wordsToDisplay.forEach(word => {
+                const item = document.createElement('div');
+                item.className = 'bg-secondary p-4 rounded-lg shadow flex justify-between items-center';
+                item.innerHTML = `
+                    <div>
+                        <h4 class="text-lg font-semibold text-primary">${word['คำศัพท์']}</h4>
+                        <p class="text-sm text-secondary">${word['ประเภทของคำ'] || 'N/A'} - ${word['หมวดศัพท์'] || 'N/A'}</p>
+                    </div>
+                    <button class="btn-warning text-white px-4 py-2 rounded-lg text-sm edit-word-btn"><i class="fas fa-edit mr-1"></i>แก้ไข</button>
+                `; // MODIFIED: Used btn-warning
+                item.querySelector('.edit-word-btn').addEventListener('click', () => showAddEditWordModal(word));
+                adminWordList.appendChild(item);
+            });
+        }
+
+        function updateWordDisplays() {
+            if (isAdmin) {
+                const searchTerm = adminSearchInput.value.toLowerCase();
+                if (searchTerm) {
+                    handleAdminSearch();
+                } else {
+                    renderAdminWordList(allWords);
+                }
+            } else {
+                 const currentSearchTerm = userSearchInput.value.trim();
+                if (currentSearchTerm) {
+                     handleUserSearch(); 
+                } else {
+                    renderUserWordList([]); 
+                }
+            }
+        }
+
+        function updateTotalWordCount() {
+            totalWordCount.textContent = `จำนวนคำศัพท์ทั้งหมด: ${allWords.length} คำ`;
+        }
+
+        function displayWordOfTheDay() {
+            if (allWords.length > 0) {
+                const randomIndex = Math.floor(Math.random() * allWords.length);
+                const word = allWords[randomIndex];
+                wordOfTheDayDiv.innerHTML = `
+                    <h4 class="text-xl font-bold text-primary">${word['คำศัพท์']}</h4>
+                    <p class="text-secondary mt-1">${word['ความหมาย'] ? word['ความหมาย'].substring(0,150)+'...' : 'ไม่มีข้อมูลความหมาย'}</p>
+                `;
+                wordOfTheDayDiv.classList.add('cursor-pointer');
+                wordOfTheDayDiv.onclick = () => showWordDetailModal(word);
+
+            } else {
+                wordOfTheDayDiv.innerHTML = '<p class="text-secondary">ไม่มีคำศัพท์ในระบบ</p>';
+                 wordOfTheDayDiv.classList.remove('cursor-pointer');
+                wordOfTheDayDiv.onclick = null;
+            }
+        }
+
+        // --- Word Detail Modal ---
+        function showWordDetailModal(word) {
+            modalWordTitle.textContent = word['คำศัพท์'];
+            let contentHtml = '';
+            if (word['ประเภทของคำ']) {
+                contentHtml += `<p><strong>ประเภทของคำ:</strong> ${word['ประเภทของคำ'].split(',').map(pos => `<span class="tag tag-purple">${pos.trim()}</span>`).join(' ')}</p>`;
+            }
+            if (word['ความหมาย']) {
+                contentHtml += `<p><strong>ความหมาย:</strong><br><span class="whitespace-pre-wrap">${word['ความหมาย']}</span></p>`;
+            }
+            if (word['Synonym']) {
+                contentHtml += `<p><strong>คำไวพจน์ (Synonym):</strong> ${word['Synonym'].split(',').map(s => `<span class="tag tag-blue">${s.trim()}</span>`).join(' ')}</p>`;
+            }
+            if (word['หมวดศัพท์']) {
+                contentHtml += `<p><strong>หมวดศัพท์:</strong> ${word['หมวดศัพท์'].split(',').map(cat => `<span class="tag tag-green">${cat.trim()}</span>`).join(' ')}</p>`;
+            }
+            if (word['ศัพทมูลวิทยา']) {
+                contentHtml += `<p><strong>ศัพทมูลวิทยา:</strong> ${word['ศัพทมูลวิทยา']}</p>`;
+            }
+            modalWordContent.innerHTML = contentHtml || '<p>ไม่มีข้อมูลเพิ่มเติม</p>';
+            wordDetailModal.style.display = 'block';
+        }
+        closeModalBtn.addEventListener('click', () => wordDetailModal.style.display = 'none');
+
+        // --- Add/Edit Word Modal & Form ---
+        function populateMultiSelect(container, items, selectedItemsStr = '') {
+            container.innerHTML = '';
+            const selectedArray = selectedItemsStr ? selectedItemsStr.split(',').map(item => item.trim()) : [];
+            items.forEach(item => {
+                const checkboxId = `chk-${container.id}-${item.replace(/\s+/g, '-')}`;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex items-center mb-1';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = checkboxId;
+                checkbox.value = item;
+                checkbox.className = 'mr-2 h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500';
+                if (selectedArray.includes(item)) {
+                    checkbox.checked = true;
+                }
+                const label = document.createElement('label');
+                label.htmlFor = checkboxId;
+                label.textContent = item;
+                label.className = 'text-sm text-secondary';
+                
+                wrapper.appendChild(checkbox);
+                wrapper.appendChild(label);
+                container.appendChild(wrapper);
+            });
+        }
+
+        function getSelectedMultiSelectValues(container) {
+            const selected = [];
+            container.querySelectorAll('input[type="checkbox"]:checked').forEach(chk => {
+                selected.push(chk.value);
+            });
+            return selected.join(',');
+        }
+
+        function showAddEditWordModal(word = null) {
+            wordForm.reset();
+            currentEditWordId = null; 
+            if (word) {
+                formTitle.textContent = 'แก้ไขคำศัพท์';
+                wordIdInput.value = word['คำศัพท์']; 
+                currentEditWordId = word['คำศัพท์']; 
+                formWordInput.value = word['คำศัพท์'];
+                formMeaningInput.value = word['ความหมาย'];
+                formSynonymInput.value = word['Synonym'];
+                formEtymologyInput.value = word['ศัพทมูลวิทยา'];
+                populateMultiSelect(formPosContainer, partsOfSpeech, word['ประเภทของคำ']);
+                populateMultiSelect(formCategoryContainer, categories, word['หมวดศัพท์']);
+            } else {
+                formTitle.textContent = 'เพิ่มคำศัพท์ใหม่';
+                wordIdInput.value = ''; 
+                populateMultiSelect(formPosContainer, partsOfSpeech);
+                populateMultiSelect(formCategoryContainer, categories);
+            }
+            addEditWordModal.style.display = 'block';
+        }
+
+        showAddWordFormBtn.addEventListener('click', () => showAddEditWordModal());
+        cancelFormBtn.addEventListener('click', () => addEditWordModal.style.display = 'none');
+
+        wordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const wordData = {
+                'คำศัพท์': formWordInput.value.trim(),
+                'ประเภทของคำ': getSelectedMultiSelectValues(formPosContainer),
+                'ความหมาย': formMeaningInput.value.trim(),
+                'Synonym': formSynonymInput.value.trim(),
+                'หมวดศัพท์': getSelectedMultiSelectValues(formCategoryContainer),
+                'ศัพทมูลวิทยา': formEtymologyInput.value.trim(),
+            };
+
+            if (!wordData['คำศัพท์'] || !wordData['ความหมาย']) {
+                alert('กรุณากรอกข้อมูล คำศัพท์ และ ความหมาย');
+                return;
+            }
+            
+            const payload = {
+                action: 'saveData',
+                ...wordData
+            };
+            
+            const result = await postData(payload);
+            if (result && (result.success || (typeof result === 'object' && result.message && result.message.includes("successfully")))) { 
+                alert('บันทึกข้อมูลสำเร็จ!');
+                addEditWordModal.style.display = 'none';
+                await loadInitialData(); 
+            } else {
+                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล: ' + (result ? (result.message || result.error || 'Unknown error') : 'No response from server'));
+            }
+        });
+        
+        // --- Manage POS and Categories ---
+        function loadCustomLists() {
+            const storedPos = localStorage.getItem('customPartsOfSpeech');
+            if (storedPos) partsOfSpeech = JSON.parse(storedPos);
+            const storedCategories = localStorage.getItem('customCategories');
+            if (storedCategories) categories = JSON.parse(storedCategories);
+        }
+
+        function saveCustomLists() {
+            localStorage.setItem('customPartsOfSpeech', JSON.stringify(partsOfSpeech));
+            localStorage.setItem('customCategories', JSON.stringify(categories));
+        }
+
+        function renderDynamicList(listArray, listDiv, typeName, addFunction, deleteFunction) {
+            listDiv.innerHTML = '';
+            listArray.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'inline-flex items-center bg-accent p-2 rounded mr-2 mb-2 text-sm';
+                itemEl.innerHTML = `
+                    <span class="text-primary">${item}</span>
+                    <button class="ml-2 text-red-500 hover:text-red-700 delete-item-btn">&times;</button>
+                `;
+                itemEl.querySelector('.delete-item-btn').addEventListener('click', () => deleteFunction(item));
+                listDiv.appendChild(itemEl);
+            });
+        }
+
+        function renderPosManagementList() {
+            renderDynamicList(partsOfSpeech, posListDiv, 'POS', addPos, deletePos);
+        }
+        function renderCategoryManagementList() {
+            renderDynamicList(categories, categoryListDiv, 'Category', addCategory, deleteCategory);
+        }
+
+        function addPos() {
+            const newItem = newPosInput.value.trim();
+            if (newItem && !partsOfSpeech.includes(newItem)) {
+                partsOfSpeech.push(newItem);
+                saveCustomLists();
+                renderPosManagementList();
+                newPosInput.value = '';
+            }
+        }
+        function deletePos(itemToDelete) {
+            partsOfSpeech = partsOfSpeech.filter(item => item !== itemToDelete);
+            saveCustomLists();
+            renderPosManagementList();
+        }
+
+        function addCategory() {
+            const newItem = newCategoryInput.value.trim();
+            if (newItem && !categories.includes(newItem)) {
+                categories.push(newItem);
+                saveCustomLists();
+                renderCategoryManagementList();
+                newCategoryInput.value = '';
+            }
+        }
+        function deleteCategory(itemToDelete) {
+            categories = categories.filter(item => item !== itemToDelete);
+            saveCustomLists();
+            renderCategoryManagementList();
+        }
+
+        addPosBtn.addEventListener('click', addPos);
+        addCategoryBtn.addEventListener('click', addCategory);
+
+
+        // --- Search Functionality ---
+        userSearchInput.addEventListener('input', () => {
+            if (currentSearchType !== 'word') {
+                currentSearchType = 'word';
+                setActiveSearchButton('word');
+            }
+            handleUserSearch();
+        });
+        
+        adminSearchInput.addEventListener('input', handleAdminSearch);
+
+        searchTypeButtonsContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('search-type-btn')) {
+                const type = event.target.dataset.searchtype;
+                currentSearchType = type;
+                setActiveSearchButton(type);
+                handleUserSearch(); 
+            }
+        });
+
+        function setActiveSearchButton(activeType) {
+            document.querySelectorAll('.search-type-btn').forEach(btn => {
+                if (btn.dataset.searchtype === activeType) {
+                    btn.classList.add('btn-search-active');
+                    btn.classList.remove('btn-secondary'); // Ensure btn-secondary is removed for active
+                } else {
+                    btn.classList.remove('btn-search-active');
+                    btn.classList.add('btn-secondary'); // Ensure non-active buttons have btn-secondary
+                }
+            });
+        }
+
+
+        function handleAdminSearch() {
+            const searchTerm = adminSearchInput.value.toLowerCase();
+            const filteredWords = allWords.filter(word => 
+                word['คำศัพท์'].toLowerCase().includes(searchTerm)
+            );
+            renderAdminWordList(filteredWords);
+        }
+        
+        let autocompleteTimeout;
+        function handleUserSearch() {
+            clearTimeout(autocompleteTimeout);
+            const searchTerm = userSearchInput.value.trim();
+
+            if (!searchTerm) {
+                autocompleteList.innerHTML = '';
+                autocompleteList.style.display = 'none';
+                renderUserWordList([]); 
+                return;
+            }
+            
+            if (currentSearchType === 'word') { 
+                 autocompleteTimeout = setTimeout(() => {
+                    const suggestions = allWords.filter(word =>
+                        word['คำศัพท์'].toLowerCase().startsWith(searchTerm.toLowerCase())
+                    ).slice(0, 10); 
+                    renderAutocomplete(suggestions);
+                }, 300); 
+            } else {
+                 autocompleteList.innerHTML = '';
+                 autocompleteList.style.display = 'none';
+            }
+
+            let results = [];
+            if (currentSearchType === 'word') {
+                results = allWords.filter(word => word['คำศัพท์'].toLowerCase().includes(searchTerm.toLowerCase()));
+            } else if (currentSearchType === 'synonym') {
+                results = allWords.filter(word => word['Synonym'] && word['Synonym'].toLowerCase().includes(searchTerm.toLowerCase()));
+            } else if (currentSearchType === 'rhyme') {
+                results = findRhymingWords(searchTerm);
+            }
+            renderUserWordList(results);
+        }
+
+        function renderAutocomplete(suggestions) {
+            if (suggestions.length === 0 || userSearchInput.value.trim() === '' || currentSearchType !== 'word') {
+                autocompleteList.innerHTML = '';
+                autocompleteList.style.display = 'none';
+                return;
+            }
+            autocompleteList.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const item = document.createElement('div');
+                item.textContent = suggestion['คำศัพท์'];
+                item.addEventListener('click', () => {
+                    userSearchInput.value = suggestion['คำศัพท์']; 
+                    autocompleteList.innerHTML = '';
+                    autocompleteList.style.display = 'none';
+                    currentSearchType = 'word'; 
+                    setActiveSearchButton('word');
+                    const exactMatchResults = allWords.filter(w => w['คำศัพท์'].toLowerCase() === suggestion['คำศัพท์'].toLowerCase());
+                    renderUserWordList(exactMatchResults); 
+                });
+                autocompleteList.appendChild(item);
+            });
+            autocompleteList.style.display = 'block';
+        }
+        
+        document.addEventListener('click', function (e) {
+            if (e.target !== userSearchInput && e.target.parentNode !== autocompleteList) {
+                autocompleteList.style.display = 'none';
+            }
+        });
+
+        // --- Rhyme Search Logic (Simplified) ---
+        const thaiVowels = "ะาิีึืุูเแโใไำฤฦอยว"; 
+        const thaiConsonants = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ";
+        const finalConsonantMap = {
+            'ก': 'กก', 'ข': 'กก', 'ค': 'กก', 'ฆ': 'กก',
+            'ง': 'กง',
+            'ด': 'กด', 'จ': 'กด', 'ช': 'กด', 'ซ': 'กด', 'ฌ': 'กด', 'ฎ': 'กด', 'ฏ': 'กด', 'ฐ': 'กด', 'ฑ': 'กด', 'ฒ': 'กด', 'ต': 'กด', 'ถ': 'กด', 'ท': 'กด', 'ธ': 'กด', 'ศ': 'กด', 'ษ': 'กด', 'ส': 'กด',
+            'น': 'กน', 'ญ': 'กน', 'ณ': 'กน', 'ร': 'กน', 'ล': 'กน', 'ฬ': 'กน',
+            'บ': 'กบ', 'ป': 'กบ', 'พ': 'กบ', 'ฟ': 'กบ', 'ภ': 'กบ',
+            'ม': 'กม',
+            'ย': 'เกย', 
+            'ว': 'เกอว' 
+        };
+
+        function getRhymeKey(word) {
+            if (!word || word.length === 0) return null;
+            let lastChar = word[word.length - 1];
+            let lastVowel = '';
+            let finalConsonantGroup = 'กกา'; 
+
+            if (thaiConsonants.includes(lastChar) && finalConsonantMap[lastChar]) {
+                finalConsonantGroup = finalConsonantMap[lastChar];
+                if (word.length > 1) {
+                    let potentialVowel = word[word.length - 2];
+                    if (thaiVowels.includes(potentialVowel)) {
+                        lastVowel = potentialVowel;
+                        if (potentialVowel === 'ำ') lastVowel = 'า'; 
+                        if (potentialVowel === 'ไ' || potentialVowel === 'ใ') lastVowel = 'ย'; 
+                        if (potentialVowel === 'เ' && word.length > 2 && word[word.length-1] === 'า') { 
+                             lastVowel = 'า'; 
+                             finalConsonantGroup = 'เกอว';
+                        }
+                    }
+                }
+            } else if (thaiVowels.includes(lastChar)) { 
+                lastVowel = lastChar;
+                 if (lastChar === 'ำ') { lastVowel = 'า'; finalConsonantGroup = 'กม'; }
+                 if (lastChar === 'ไ' || lastChar === 'ใ') { lastVowel = 'ย'; finalConsonantGroup = 'เกย';} 
+                 if (lastChar === 'เ' && word.endsWith('า')) { 
+                     lastVowel = 'า'; finalConsonantGroup = 'เกอว';
+                 }
+            } else { 
+                return null; 
+            }
+            
+            if (['ะ', 'ั'].includes(lastVowel)) lastVowel = 'อะ';
+            if (['า'].includes(lastVowel)) lastVowel = 'อา';
+            if (['ิ'].includes(lastVowel)) lastVowel = 'อิ';
+            if (['ี'].includes(lastVowel)) lastVowel = 'อี';
+            if (['ึ'].includes(lastVowel)) lastVowel = 'อึ';
+            if (['ื'].includes(lastVowel)) lastVowel = 'อือ';
+            if (['ุ'].includes(lastVowel)) lastVowel = 'อุ';
+            if (['ู'].includes(lastVowel)) lastVowel = 'อู';
+            if (['เ', 'เอะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'เอ'; 
+            if (['แ', 'แอะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'แอ'; 
+            if (['โ', 'โอะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'โอ'; 
+            if (['อ', 'เอาะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'ออ'; 
+            if (['เออ', 'เออะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'เออ';
+            if (['เอีย', 'เอียะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'เอีย';
+            if (['เอือ', 'เอือะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'เอือ';
+            if (['อัว', 'อัวะ'].includes(lastVowel) && finalConsonantGroup === 'กกา') lastVowel = 'อัว';
+
+
+            if (!lastVowel) { 
+                if (word.includes('ั') && finalConsonantGroup !== 'กกา') lastVowel = 'อะ';
+                else if (word.includes('า')) lastVowel = 'อา';
+            }
+            
+            return lastVowel ? `${lastVowel}_${finalConsonantGroup}` : null;
+        }
+
+        function findRhymingWords(searchTerm) {
+            const searchKey = getRhymeKey(searchTerm);
+            if (!searchKey) {
+                alert('ไม่สามารถวิเคราะห์คำสำหรับค้นหาสัมผัสได้ กรุณาลองคำอื่น');
+                return [];
+            }
+            
+            return allWords.filter(wordObj => {
+                const wordKey = getRhymeKey(wordObj['คำศัพท์']);
+                return wordKey && wordKey === searchKey && wordObj['คำศัพท์'] !== searchTerm;
+            });
+        }
+
+
+        // --- Window close handling for modals ---
+        window.onclick = function(event) {
+            if (event.target == wordDetailModal) {
+                wordDetailModal.style.display = "none";
+            }
+            if (event.target == addEditWordModal) {
+                addEditWordModal.style.display = "none";
+            }
+        }
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedIsAdmin = sessionStorage.getItem('isAdmin');
+            if (storedIsAdmin === 'true') {
+                isAdmin = true;
+                loginSection.classList.add('hidden');
+                adminSection.classList.remove('hidden');
+                userSection.classList.add('hidden');
+            } else {
+                switchToUserView(); 
+            }
+            loadInitialData(); 
+            setActiveSearchButton(currentSearchType); 
+        });
+
+    </script>
+</body>
+</html>
