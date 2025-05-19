@@ -31,6 +31,11 @@
             --btn-success-hover-bg: #16a34a; /* green-600 */
             --btn-warning-bg: #eab308; /* yellow-500 */
             --btn-warning-hover-bg: #ca8a04; /* yellow-600 */
+            --consonant-btn-bg: #e5e7eb; /* gray-200 */
+            --consonant-btn-text: #374151; /* gray-700 */
+            --consonant-btn-hover-bg: #d1d5db; /* gray-300 */
+            --consonant-btn-active-bg: #8b5cf6; /* violet-500 */
+            --consonant-btn-active-text: white;
         }
         /* Dark theme variables */
         .dark {
@@ -52,6 +57,11 @@
             --btn-success-hover-bg: #15803d; /* green-700 */
             --btn-warning-bg: #ca8a04; /* yellow-600 */
             --btn-warning-hover-bg: #a16207; /* yellow-700 */
+            --consonant-btn-bg: #374151; /* gray-700 */
+            --consonant-btn-text: #d1d5db; /* gray-300 */
+            --consonant-btn-hover-bg: #4b5563; /* gray-600 */
+            --consonant-btn-active-bg: #a78bfa; /* violet-400 */
+            --consonant-btn-active-text: white;
         }
 
         /* Utility classes using CSS variables */
@@ -76,10 +86,25 @@
         .btn-warning:hover { background-color: var(--btn-warning-hover-bg); }
         
         .btn-search-active {
-            background-color: var(--btn-primary-bg) !important; /* Use primary button color for active search type */
+            background-color: var(--btn-primary-bg) !important;
             color: white !important;
             box-shadow: 0 0 0 2px var(--btn-primary-hover);
         }
+
+        .consonant-filter-btn {
+            background-color: var(--consonant-btn-bg);
+            color: var(--consonant-btn-text);
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .consonant-filter-btn:hover {
+            background-color: var(--consonant-btn-hover-bg);
+        }
+        .consonant-filter-btn-active {
+            background-color: var(--consonant-btn-active-bg) !important;
+            color: var(--consonant-btn-active-text) !important;
+            font-weight: bold;
+        }
+
 
         /* Custom scrollbar for webkit browsers */
         ::-webkit-scrollbar {
@@ -98,90 +123,20 @@
             background: var(--btn-primary-hover);
         }
 
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 100; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.5); 
-        }
-        .modal-content {
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh; 
-            overflow-y: auto; 
-        }
-        .autocomplete-items {
-            position: absolute;
-            border: 1px solid var(--border-color);
-            border-top: none;
-            z-index: 99;
-            top: 100%;
-            left: 0;
-            right: 0;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .autocomplete-items div {
-            padding: 10px;
-            cursor: pointer;
-            background-color: var(--input-bg);
-            color: var(--input-text);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .autocomplete-items div:hover {
-            background-color: var(--bg-accent);
-        }
-        .tag {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            margin: 0.125rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-        }
-        .tag-purple {
-            background-color: #c084fc; 
-            color: white;
-        }
-        .dark .tag-purple {
-            background-color: #a855f7; 
-        }
-        .tag-blue {
-            background-color: #7dd3fc; 
-            color: #0c4a6e; 
-        }
-        .dark .tag-blue {
-            background-color: #38bdf8; 
-            color: white;
-        }
-        .tag-green {
-            background-color: #6ee7b7; 
-            color: #065f46; 
-        }
-        .dark .tag-green {
-            background-color: #34d399; 
-            color: white;
-        }
-        .loading-spinner {
-            border: 4px solid var(--bg-accent);
-            border-top: 4px solid var(--btn-primary-bg);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { margin: 10% auto; padding: 20px; border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; }
+        .autocomplete-items { position: absolute; border: 1px solid var(--border-color); border-top: none; z-index: 99; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; }
+        .autocomplete-items div { padding: 10px; cursor: pointer; background-color: var(--input-bg); color: var(--input-text); border-bottom: 1px solid var(--border-color); }
+        .autocomplete-items div:hover { background-color: var(--bg-accent); }
+        .tag { display: inline-block; padding: 0.25rem 0.5rem; margin: 0.125rem; border-radius: 0.375rem; font-size: 0.875rem; }
+        .tag-purple { background-color: #c084fc; color: white; }
+        .dark .tag-purple { background-color: #a855f7; }
+        .tag-blue { background-color: #7dd3fc; color: #0c4a6e; }
+        .dark .tag-blue { background-color: #38bdf8; color: white; }
+        .tag-green { background-color: #6ee7b7; color: #065f46; }
+        .dark .tag-green { background-color: #34d399; color: white; }
+        .loading-spinner { border: 4px solid var(--bg-accent); border-top: 4px solid var(--btn-primary-bg); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-primary text-primary transition-colors duration-300">
@@ -247,6 +202,12 @@
             <div class="flex justify-between items-center mb-6">
                  <h2 class="text-3xl font-semibold text-primary">ค้นหาคำศัพท์</h2>
                  <button id="switchToLoginViewBtn" class="btn-primary px-6 py-2 rounded-lg shadow-md hover:opacity-90 transition-opacity">ไปหน้าผู้ดูแล</button>
+            </div>
+
+            <div id="consonantFilterContainer" class="mb-6 p-3 bg-secondary rounded-lg shadow">
+                <h3 class="text-lg font-semibold text-primary mb-2 text-center">ค้นหาตามหมวดอักษร</h3>
+                <div id="consonantButtons" class="flex flex-wrap justify-center gap-1">
+                    </div>
             </div>
 
             <div class="mb-6">
@@ -345,7 +306,15 @@
         let allWords = [];
         let isAdmin = false;
         let currentEditWordId = null; 
-        let currentSearchType = 'word'; // Default search type
+        let currentSearchType = 'word'; 
+        let currentConsonantFilter = null; // Stores the currently selected Thai consonant for filtering
+
+        const THAI_CONSONANTS = [
+            'ก', 'ข', 'ฃ', 'ค', 'ฅ', 'ฆ', 'ง', 'จ', 'ฉ', 'ช', 'ซ', 'ฌ', 'ญ', 
+            'ฎ', 'ฏ', 'ฐ', 'ฑ', 'ฒ', 'ณ', 'ด', 'ต', 'ถ', 'ท', 'ธ', 'น', 
+            'บ', 'ป', 'ผ', 'ฝ', 'พ', 'ฟ', 'ภ', 'ม', 'ย', 'ร', 'ล', 'ว', 
+            'ศ', 'ษ', 'ส', 'ห', 'ฬ', 'อ', 'ฮ'
+        ];
 
         let partsOfSpeech = ['คำนาม', 'คำสรรพนาม', 'คำกริยา', 'คำวิเศษณ์', 'คำบุพบท', 'คำสันธาน', 'คำอุทาน'];
         let categories = ['ทั่วไป', 'หลักภาษาไทย', 'พฤกษศาสตร์', 'สัตว์']; 
@@ -382,6 +351,7 @@
 
         const userSearchInput = document.getElementById('userSearchInput');
         const searchTypeButtonsContainer = document.getElementById('searchTypeButtons');
+        const consonantButtonsContainer = document.getElementById('consonantButtons'); // Container for consonant buttons
         const autocompleteList = document.getElementById('autocompleteList');
         const userWordList = document.getElementById('userWordList');
         const totalWordCount = document.getElementById('totalWordCount');
@@ -421,7 +391,7 @@
             applyTheme(newTheme);
         });
         
-        applyTheme(localStorage.getItem('theme') || 'light'); // Apply theme on initial load
+        applyTheme(localStorage.getItem('theme') || 'light');
 
 
         // --- API Communication ---
@@ -511,6 +481,7 @@
             loadCustomLists(); 
             renderPosManagementList();
             renderCategoryManagementList();
+            renderConsonantFilterButtons(); // Render consonant buttons after data is potentially available
         }
 
         // --- UI Updates ---
@@ -525,12 +496,13 @@
                 adminSection.classList.add('hidden');
                 userSection.classList.remove('hidden');
                 const currentSearchTerm = userSearchInput.value.trim();
-                if (currentSearchTerm) {
+                if (currentSearchTerm || currentConsonantFilter) { // If there's any filter active
                      handleUserSearch(); 
                 } else {
                     renderUserWordList([]); 
                 }
                 setActiveSearchButton(currentSearchType);
+                setActiveConsonantButton(currentConsonantFilter);
             }
         }
         
@@ -541,6 +513,7 @@
             autocompleteList.innerHTML = ''; 
             autocompleteList.style.display = 'none'; 
             currentSearchType = 'word'; 
+            currentConsonantFilter = null; // Reset consonant filter
             updateView(); 
         }
 
@@ -589,10 +562,10 @@
         function renderUserWordList(wordsToDisplay) {
             userWordList.innerHTML = '';
             if (!wordsToDisplay || wordsToDisplay.length === 0) {
-                if (userSearchInput.value.trim() !== '') {
+                if (userSearchInput.value.trim() !== '' || currentConsonantFilter) {
                     userWordList.innerHTML = '<p class="text-secondary col-span-full text-center">ไม่พบคำศัพท์ที่ตรงกับคำค้นหา</p>';
                 } else {
-                     userWordList.innerHTML = '<p class="text-secondary col-span-full text-center">กรุณาพิมพ์คำศัพท์และเลือกประเภทการค้นหา</p>'; 
+                     userWordList.innerHTML = '<p class="text-secondary col-span-full text-center">กรุณาพิมพ์คำศัพท์ หรือเลือกหมวดอักษรเพื่อค้นหา</p>'; 
                 }
                 return;
             }
@@ -624,7 +597,7 @@
                         <p class="text-sm text-secondary">${word['ประเภทของคำ'] || 'N/A'} - ${word['หมวดศัพท์'] || 'N/A'}</p>
                     </div>
                     <button class="btn-warning text-white px-4 py-2 rounded-lg text-sm edit-word-btn"><i class="fas fa-edit mr-1"></i>แก้ไข</button>
-                `; // MODIFIED: Used btn-warning
+                `;
                 item.querySelector('.edit-word-btn').addEventListener('click', () => showAddEditWordModal(word));
                 adminWordList.appendChild(item);
             });
@@ -639,8 +612,10 @@
                     renderAdminWordList(allWords);
                 }
             } else {
+                // User view updates are primarily handled by handleUserSearch or initial empty state in updateView
+                // This ensures that if allWords is updated (e.g. after admin edit), user view reflects potential changes if a search is active
                  const currentSearchTerm = userSearchInput.value.trim();
-                if (currentSearchTerm) {
+                if (currentSearchTerm || currentConsonantFilter) {
                      handleUserSearch(); 
                 } else {
                     renderUserWordList([]); 
@@ -855,10 +830,8 @@
 
         // --- Search Functionality ---
         userSearchInput.addEventListener('input', () => {
-            if (currentSearchType !== 'word') {
-                currentSearchType = 'word';
-                setActiveSearchButton('word');
-            }
+            // No need to change currentSearchType here, let search type buttons handle it.
+            // Autocomplete should only trigger if currentSearchType is 'word'.
             handleUserSearch();
         });
         
@@ -877,10 +850,50 @@
             document.querySelectorAll('.search-type-btn').forEach(btn => {
                 if (btn.dataset.searchtype === activeType) {
                     btn.classList.add('btn-search-active');
-                    btn.classList.remove('btn-secondary'); // Ensure btn-secondary is removed for active
+                    btn.classList.remove('btn-secondary'); 
                 } else {
                     btn.classList.remove('btn-search-active');
-                    btn.classList.add('btn-secondary'); // Ensure non-active buttons have btn-secondary
+                    btn.classList.add('btn-secondary'); 
+                }
+            });
+        }
+
+        // --- Consonant Filter ---
+        function renderConsonantFilterButtons() {
+            consonantButtonsContainer.innerHTML = ''; // Clear existing buttons
+            
+            // "All" button
+            const allBtn = document.createElement('button');
+            allBtn.textContent = 'ทั้งหมด';
+            allBtn.className = 'consonant-filter-btn px-2 py-1 rounded text-xs sm:text-sm';
+            allBtn.dataset.consonant = ''; // Represents no filter
+            allBtn.addEventListener('click', () => setConsonantFilter(null));
+            consonantButtonsContainer.appendChild(allBtn);
+
+            THAI_CONSONANTS.forEach(consonant => {
+                const btn = document.createElement('button');
+                btn.textContent = consonant;
+                btn.className = 'consonant-filter-btn px-2 py-1 rounded text-xs sm:text-sm';
+                btn.dataset.consonant = consonant;
+                btn.addEventListener('click', () => setConsonantFilter(consonant));
+                consonantButtonsContainer.appendChild(btn);
+            });
+            setActiveConsonantButton(currentConsonantFilter); // Set initial active state
+        }
+
+        function setConsonantFilter(consonant) {
+            currentConsonantFilter = consonant; // consonant can be null for "All"
+            setActiveConsonantButton(consonant);
+            handleUserSearch();
+        }
+
+        function setActiveConsonantButton(activeConsonant) {
+            document.querySelectorAll('#consonantButtons .consonant-filter-btn').forEach(btn => {
+                const btnConsonant = btn.dataset.consonant;
+                if ((activeConsonant === null && btnConsonant === '') || (btnConsonant === activeConsonant)) {
+                    btn.classList.add('consonant-filter-btn-active');
+                } else {
+                    btn.classList.remove('consonant-filter-btn-active');
                 }
             });
         }
@@ -894,39 +907,65 @@
             renderAdminWordList(filteredWords);
         }
         
-        let autocompleteTimeout;
+        let handleSearchTimeout; // Renamed from autocompleteTimeout for clarity
         function handleUserSearch() {
-            clearTimeout(autocompleteTimeout);
-            const searchTerm = userSearchInput.value.trim();
-
-            if (!searchTerm) {
-                autocompleteList.innerHTML = '';
-                autocompleteList.style.display = 'none';
-                renderUserWordList([]); 
-                return;
-            }
+            clearTimeout(handleSearchTimeout);
             
-            if (currentSearchType === 'word') { 
-                 autocompleteTimeout = setTimeout(() => {
-                    const suggestions = allWords.filter(word =>
-                        word['คำศัพท์'].toLowerCase().startsWith(searchTerm.toLowerCase())
-                    ).slice(0, 10); 
-                    renderAutocomplete(suggestions);
-                }, 300); 
-            } else {
-                 autocompleteList.innerHTML = '';
-                 autocompleteList.style.display = 'none';
-            }
+            handleSearchTimeout = setTimeout(() => { // Debounce the entire search logic
+                const searchTerm = userSearchInput.value.trim().toLowerCase();
+                let wordsToFilter = allWords;
 
-            let results = [];
-            if (currentSearchType === 'word') {
-                results = allWords.filter(word => word['คำศัพท์'].toLowerCase().includes(searchTerm.toLowerCase()));
-            } else if (currentSearchType === 'synonym') {
-                results = allWords.filter(word => word['Synonym'] && word['Synonym'].toLowerCase().includes(searchTerm.toLowerCase()));
-            } else if (currentSearchType === 'rhyme') {
-                results = findRhymingWords(searchTerm);
-            }
-            renderUserWordList(results);
+                // 1. Apply Consonant Filter first
+                if (currentConsonantFilter) {
+                    wordsToFilter = wordsToFilter.filter(word => 
+                        word['คำศัพท์'] && word['คำศัพท์'].startsWith(currentConsonantFilter)
+                    );
+                }
+
+                // 2. Apply Search Term and Type
+                let results = [];
+                if (!searchTerm && !currentConsonantFilter) { // If no search term AND no consonant filter, show nothing
+                    autocompleteList.innerHTML = '';
+                    autocompleteList.style.display = 'none';
+                    renderUserWordList([]);
+                    return;
+                }
+                
+                // Autocomplete logic (only if search term exists and type is 'word')
+                if (searchTerm && currentSearchType === 'word') {
+                    const suggestions = wordsToFilter.filter(word => // Autocomplete on consonant-filtered list
+                        word['คำศัพท์'].toLowerCase().startsWith(searchTerm)
+                    ).slice(0, 10);
+                    renderAutocomplete(suggestions);
+                } else {
+                    autocompleteList.innerHTML = '';
+                    autocompleteList.style.display = 'none';
+                }
+
+                // Actual search filtering
+                if (searchTerm) { // Only filter by search term if it exists
+                    if (currentSearchType === 'word') {
+                        results = wordsToFilter.filter(word => word['คำศัพท์'].toLowerCase().includes(searchTerm));
+                    } else if (currentSearchType === 'synonym') {
+                        results = wordsToFilter.filter(word => {
+                            if (!word['Synonym']) return false;
+                            const synonymsArray = word['Synonym'].toLowerCase().split(',').map(s => s.trim());
+                            return synonymsArray.includes(searchTerm);
+                        });
+                    } else if (currentSearchType === 'rhyme') {
+                        // Rhyme search should ideally consider the consonant filter for its base list,
+                        // but the searchTerm for rhyme itself might not start with that consonant.
+                        // For now, findRhymingWords operates on allWords, then we can intersect if needed,
+                        // or acknowledge rhyme search is broader.
+                        // Let's make rhyme search operate on the consonant-filtered list if a consonant is selected.
+                        results = findRhymingWords(searchTerm, wordsToFilter); 
+                    }
+                } else { 
+                    // If no search term, but there IS a consonant filter, results are the consonant-filtered list
+                    results = wordsToFilter;
+                }
+                renderUserWordList(results);
+            }, 250); // Debounce time for search
         }
 
         function renderAutocomplete(suggestions) {
@@ -938,14 +977,19 @@
             autocompleteList.innerHTML = '';
             suggestions.forEach(suggestion => {
                 const item = document.createElement('div');
-                item.textContent = suggestion['คำศัพท์'];
+                item.textContent = suggestion['คำศัพท์']; 
                 item.addEventListener('click', () => {
                     userSearchInput.value = suggestion['คำศัพท์']; 
                     autocompleteList.innerHTML = '';
                     autocompleteList.style.display = 'none';
-                    currentSearchType = 'word'; 
-                    setActiveSearchButton('word');
-                    const exactMatchResults = allWords.filter(w => w['คำศัพท์'].toLowerCase() === suggestion['คำศัพท์'].toLowerCase());
+                    // currentSearchType = 'word'; // Should already be word for autocomplete
+                    // setActiveSearchButton('word'); // Not needed here, already set
+                    
+                    let baseForExact = allWords;
+                    if(currentConsonantFilter){ // If consonant filter is active, exact match from that subset
+                        baseForExact = allWords.filter(w => w['คำศัพท์'] && w['คำศัพท์'].startsWith(currentConsonantFilter));
+                    }
+                    const exactMatchResults = baseForExact.filter(w => w['คำศัพท์'].toLowerCase() === suggestion['คำศัพท์'].toLowerCase());
                     renderUserWordList(exactMatchResults); 
                 });
                 autocompleteList.appendChild(item);
@@ -961,7 +1005,7 @@
 
         // --- Rhyme Search Logic (Simplified) ---
         const thaiVowels = "ะาิีึืุูเแโใไำฤฦอยว"; 
-        const thaiConsonants = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ";
+        const thaiConsonantsAlpha = "กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮ"; // Used for getRhymeKey
         const finalConsonantMap = {
             'ก': 'กก', 'ข': 'กก', 'ค': 'กก', 'ฆ': 'กก',
             'ง': 'กง',
@@ -973,21 +1017,22 @@
             'ว': 'เกอว' 
         };
 
-        function getRhymeKey(word) {
+        function getRhymeKey(word) { 
             if (!word || word.length === 0) return null;
-            let lastChar = word[word.length - 1];
+            const lowerWord = word.toLowerCase(); // Work with lowercase for analysis
+            let lastChar = lowerWord[lowerWord.length - 1];
             let lastVowel = '';
             let finalConsonantGroup = 'กกา'; 
 
-            if (thaiConsonants.includes(lastChar) && finalConsonantMap[lastChar]) {
+            if (thaiConsonantsAlpha.includes(lastChar) && finalConsonantMap[lastChar]) {
                 finalConsonantGroup = finalConsonantMap[lastChar];
-                if (word.length > 1) {
-                    let potentialVowel = word[word.length - 2];
+                if (lowerWord.length > 1) {
+                    let potentialVowel = lowerWord[lowerWord.length - 2];
                     if (thaiVowels.includes(potentialVowel)) {
                         lastVowel = potentialVowel;
                         if (potentialVowel === 'ำ') lastVowel = 'า'; 
                         if (potentialVowel === 'ไ' || potentialVowel === 'ใ') lastVowel = 'ย'; 
-                        if (potentialVowel === 'เ' && word.length > 2 && word[word.length-1] === 'า') { 
+                        if (potentialVowel === 'เ' && lowerWord.length > 2 && lowerWord[lowerWord.length-1] === 'า') { 
                              lastVowel = 'า'; 
                              finalConsonantGroup = 'เกอว';
                         }
@@ -997,7 +1042,7 @@
                 lastVowel = lastChar;
                  if (lastChar === 'ำ') { lastVowel = 'า'; finalConsonantGroup = 'กม'; }
                  if (lastChar === 'ไ' || lastChar === 'ใ') { lastVowel = 'ย'; finalConsonantGroup = 'เกย';} 
-                 if (lastChar === 'เ' && word.endsWith('า')) { 
+                 if (lastChar === 'เ' && lowerWord.endsWith('า')) { 
                      lastVowel = 'า'; finalConsonantGroup = 'เกอว';
                  }
             } else { 
@@ -1023,23 +1068,24 @@
 
 
             if (!lastVowel) { 
-                if (word.includes('ั') && finalConsonantGroup !== 'กกา') lastVowel = 'อะ';
-                else if (word.includes('า')) lastVowel = 'อา';
+                if (lowerWord.includes('ั') && finalConsonantGroup !== 'กกา') lastVowel = 'อะ';
+                else if (lowerWord.includes('า')) lastVowel = 'อา';
             }
             
             return lastVowel ? `${lastVowel}_${finalConsonantGroup}` : null;
         }
 
-        function findRhymingWords(searchTerm) {
-            const searchKey = getRhymeKey(searchTerm);
+        function findRhymingWords(searchTerm, sourceArray = allWords) { // searchTerm is already lowercase, sourceArray is the list to search within
+            const searchKey = getRhymeKey(searchTerm); // Pass lowercase searchTerm
             if (!searchKey) {
-                alert('ไม่สามารถวิเคราะห์คำสำหรับค้นหาสัมผัสได้ กรุณาลองคำอื่น');
+                // console.warn('Could not determine rhyme key for:', searchTerm);
+                // alert('ไม่สามารถวิเคราะห์คำสำหรับค้นหาสัมผัสได้ กรุณาลองคำอื่น'); // Consider if alert is too intrusive
                 return [];
             }
             
-            return allWords.filter(wordObj => {
-                const wordKey = getRhymeKey(wordObj['คำศัพท์']);
-                return wordKey && wordKey === searchKey && wordObj['คำศัพท์'] !== searchTerm;
+            return sourceArray.filter(wordObj => {
+                const wordKey = getRhymeKey(wordObj['คำศัพท์']); // getRhymeKey handles toLowerCase
+                return wordKey && wordKey === searchKey && wordObj['คำศัพท์'].toLowerCase() !== searchTerm;
             });
         }
 
@@ -1065,8 +1111,9 @@
             } else {
                 switchToUserView(); 
             }
-            loadInitialData(); 
-            setActiveSearchButton(currentSearchType); 
+            loadInitialData(); // This will also call renderConsonantFilterButtons
+            // setActiveSearchButton(currentSearchType); // Moved to updateView
+            // setActiveConsonantButton(currentConsonantFilter); // Moved to updateView
         });
 
     </script>
